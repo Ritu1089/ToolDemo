@@ -1,8 +1,11 @@
 ---
-# handlers file for myrole
-# install_kafka.yml
-
+# Handlers can be used to restart the services if required.
 - name: Restart Kafka
   ansible.builtin.systemd:
     name: kafka
+    state: restarted
+
+- name: Restart Zookeeper
+  ansible.builtin.systemd:
+    name: zookeeper
     state: restarted
