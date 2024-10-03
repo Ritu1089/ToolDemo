@@ -1,0 +1,47 @@
+---
+# tasks file for myrole
+# ansible-kafka-role/tasks/main.yml
+
+- name: Install Java 11
+  apt:
+    name: openjdk-11-jdk
+    state: present
+  become: true
+
+- name: Create Kafka user and group
+  user:
+    name: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    system: yes
+    create_home: no
+  become: true
+
+- name: Download Kafka
+  get_url:
+    url: "{{ kafka_url }}"
+    dest: "/tmp/kafka_2.13-{{ kafka_version }}.tgz"
+  become: true
+
+- name: Create Kafka installation directory
+  file:
+    path: "{{ kafka_install_dir }}"
+    state: directory
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: '0755'
+  become: true
+
+- name: Unarchive Kafka
+  unarchive:
+    src: "/tmp/kafka_2.13-{{ kafka_version }}.tgz"
+    dest: "{{ kafka_install_dir }}"
+    remote_src: yes
+  become: true
+
+- name: Add Kafka bin to PATH
+  lineinfile:
+    path: /home/{{ kafka_user }}/.bashrc
+    line: 'export PATH="$PATH:{{ kafka_install_dir }}/kafka_2.13-{{ kafka_version }}/bin"'
+    state: present
+  become: true
+
