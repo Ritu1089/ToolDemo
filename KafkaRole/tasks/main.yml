@@ -1,47 +1,82 @@
 ---
-# tasks file for myrole
-# ansible-kafka-role/tasks/main.yml
+- name: Add kafka user and group
+  ansible.builtin.user:
+    name: kafka
+    groups: sudo
+    shell: /bin/bash
+    create_home: yes
 
-- name: Install Java 11
-  apt:
+- name: Install OpenJDK 11
+  ansible.builtin.apt:
     name: openjdk-11-jdk
     state: present
-  become: true
+    update_cache: yes
 
-- name: Create Kafka user and group
-  user:
-    name: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
-    system: yes
-    create_home: no
-  become: true
+- name: Create downloads directory
+  ansible.builtin.file:
+    path: /home/kafka/downloads
+    state: directory
+    owner: kafka
+    group: kafka
 
 - name: Download Kafka
-  get_url:
-    url: "{{ kafka_url }}"
-    dest: "/tmp/kafka_2.13-{{ kafka_version }}.tgz"
-  become: true
-
-- name: Create Kafka installation directory
-  file:
-    path: "{{ kafka_install_dir }}"
-    state: directory
-    owner: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
+  ansible.builtin.get_url:
+    url: https://archive.apache.org/dist/kafka/3.4.0/kafka_2.12-3.4.0.tgz
+    dest: /home/kafka/downloads/kafka_2.12-3.4.0.tgz
+    owner: kafka
+    group: kafka
     mode: '0755'
-  become: true
 
-- name: Unarchive Kafka
-  unarchive:
-    src: "/tmp/kafka_2.13-{{ kafka_version }}.tgz"
-    dest: "{{ kafka_install_dir }}"
+- name: Extract Kafka tarball
+  ansible.builtin.unarchive:
+    src: /home/kafka/downloads/kafka_2.12-3.4.0.tgz
+    dest: /home/kafka/
     remote_src: yes
-  become: true
 
-- name: Add Kafka bin to PATH
-  lineinfile:
-    path: /home/{{ kafka_user }}/.bashrc
-    line: 'export PATH="$PATH:{{ kafka_install_dir }}/kafka_2.13-{{ kafka_version }}/bin"'
-    state: present
-  become: true
+- name: Rename extracted folder to kafka
+  ansible.builtin.command:
+    cmd: mv /home/kafka/kafka_2.12-3.4.0/ /home/kafka/kafka/
+    creates: /home/kafka/kafka
+
+
+- name: Create zookeeper service file
+  ansible.builtin.template:
+    src: zookeeper.service.j2
+    dest: /etc/systemd/system/zookeeper.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Create kafka service file
+  ansible.builtin.template:
+    src: kafka.service.j2
+    dest: /etc/systemd/system/kafka.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable zookeeper service
+  ansible.builtin.systemd:
+    name: zookeeper
+    enabled: yes
+
+- name: Enable kafka service
+  ansible.builtin.systemd:
+    name: kafka
+    enabled: yes
+
+- name: Start zookeeper service
+  ansible.builtin.systemd:
+    name: zookeeper
+    state: started
+
+- name: Start kafka service
+  ansible.builtin.systemd:
+    name: kafka
+    state: started
+
 
