@@ -184,7 +184,7 @@ variable "instance_type" {
 
 variable "key_name" {
   type = string
-  default = "ansible-pritam"
+  default = "kafkademo"
 }
 
 variable "instance_name" {
