@@ -6,6 +6,8 @@ filters:
   tag:Name:
     - "private-instance-01"
     - "private-instance-02"
+    - "private-instance-03"
+    - "ZK-instance-04"
 compose:
   # ansible_host: public_ip_address  # For public instances
    ansible_host: private_ip_address  # Uncomment if using private instances
