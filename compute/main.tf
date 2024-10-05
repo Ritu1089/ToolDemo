@@ -39,6 +39,31 @@ resource "aws_instance" "server-02" {
   }
 }
 
+# private instance 03 creation
+resource "aws_instance" "server-03" {
+  ami           = var.AMI_ID
+  instance_type = var.instance_type
+  key_name = var.key_name
+  vpc_security_group_ids = [var.sg02_id]
+  subnet_id = var.private02_id
+  
+  tags = {
+    Name = var.instance04_name
+  }
+}
+
+# private ZK instance 04 creation
+resource "aws_instance" "server-04" {
+  ami           = var.AMI_ID
+  instance_type = var.instance_type
+  key_name = var.key_name
+  vpc_security_group_ids = [var.sg02_id]
+  subnet_id = var.private02_id
+  
+  tags = {
+    Name = var.instance05_name
+  }
+}
 
 # target grp creation
 
