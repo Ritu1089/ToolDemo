@@ -18,6 +18,7 @@ variable "private02_id" {
   type = string
 }
 
+
 variable "AMI_ID" {
   type = string
   default = "ami-0d53d72369335a9d6"
@@ -46,6 +47,16 @@ variable "instance02_name" {
 variable "instance03_name" {
   type = string
   default = "private-instance-02"
+}
+
+variable "instance04_name" {
+  type = string
+  default = "private-instance-03"
+}
+
+variable "instance05_name" {
+  type = string
+  default = "ZK-instance-04"
 }
 
 
