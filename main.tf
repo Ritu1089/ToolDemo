@@ -1,3 +1,4 @@
+
 module "networking" {
   source = "./networking"
   cidr_range = var.cidr_range
@@ -40,7 +41,6 @@ module "networking" {
   allow_port = var.allow_port
   sg_cidr_range = var.sg_cidr_range
   prometheus_port = var.prometheus_port
-  exporter_port = var.exporter_port
   requester_CIDR = var.requester_CIDR
   accepter_CIDR = var.accepter_CIDR
   region = var.region
