@@ -163,10 +163,7 @@ variable "prometheus_port" {
   default = "2181"
 }
 
-variable "exporter_port" {
-  type = string
-  default = "9100"
-}
+
 
 
 # compute variable
