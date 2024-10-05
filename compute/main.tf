@@ -77,7 +77,7 @@ resource "aws_lb_target_group_attachment" "test_02" {
 
 # Application Load Balancer
 
-resource "aws_lb" "Grafana-alb" {
+resource "aws_lb" "kafka-alb" {
   name               = var.alb_name
   internal           = var.internal_value
   load_balancer_type = var.ALB_type
