@@ -253,20 +253,6 @@ resource "aws_security_group" "SG_02" {
     cidr_blocks = [var.sg_cidr_range]
   }
 
-   ingress  {
-    from_port   = var.exporter_port
-    to_port     = var.exporter_port
-    protocol    = var.protocol_tcp
-    cidr_blocks = [var.sg_cidr_range]
-  }
-  egress  {
-    from_port   = var.allow_port
-    to_port     = var.allow_port
-    protocol    = var.protocol_01
-    cidr_blocks = [var.sg_cidr_range]
-  }
-   
-
   ingress  {
     from_port   = var.ssh_port
     to_port     = var.ssh_port
@@ -326,3 +312,4 @@ resource "aws_vpc_peering_connection_accepter" "accepter" {
   vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
   auto_accept               = true
 }
+
