@@ -6,8 +6,8 @@ After=zookeeper.service
 [Service]
 Type=simple
 User=kafka
-ExecStart=/home/kafka/kafka/bin/kafka-server-start.sh /home/kafka/kafka/config/server.properties
-ExecStop=/home/kafka/kafka/bin/kafka-server-stop.sh
+ExecStart=/home/ubuntu/kafka/bin/kafka-server-start.sh /home/ubuntu/kafka/config/server.properties
+ExecStop=/home/ubuntu/kafka/bin/kafka-server-stop.sh
 Restart=on-abnormal
 
 [Install]
