@@ -26,6 +26,15 @@ variable "subnet2cidr" {
   default = "10.0.2.0/24"
 }
 
+variable "instance04_name" {
+  type = string
+  default = "private-instance-03"
+}
+
+variable "instance05_name" {
+  type = string
+  default = "ZK-instance-04"
+}
 
 variable "subnet3cidr" {
   type = string
