@@ -1,3 +1,4 @@
+
 # vpc id ouput
 output "vpc_id" {
   value = aws_vpc.vpc_test.id
