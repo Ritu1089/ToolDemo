@@ -14,7 +14,7 @@
 
 - name: Create downloads directory
   ansible.builtin.file:
-    path: /home/kafka/downloads
+    path: /home/ubuntu/downloads
     state: directory
     owner: kafka
     group: kafka
@@ -22,21 +22,21 @@
 - name: Download Kafka
   ansible.builtin.get_url:
     url: https://archive.apache.org/dist/kafka/3.4.0/kafka_2.12-3.4.0.tgz
-    dest: /home/kafka/downloads/kafka_2.12-3.4.0.tgz
+    dest: /home/ubuntu/downloads/kafka_2.12-3.4.0.tgz
     owner: kafka
     group: kafka
     mode: '0755'
 
 - name: Extract Kafka tarball
   ansible.builtin.unarchive:
-    src: /home/kafka/downloads/kafka_2.12-3.4.0.tgz
-    dest: /home/kafka/
+    src: /home/ubuntu/downloads/kafka_2.12-3.4.0.tgz
+    dest: /home/ubuntu/
     remote_src: yes
 
 - name: Rename extracted folder to kafka
   ansible.builtin.command:
-    cmd: mv /home/kafka/kafka_2.12-3.4.0/ /home/kafka/kafka/
-    creates: /home/kafka/kafka
+    cmd: mv /home/ubuntu/kafka_2.12-3.4.0/ /home/ubuntu/kafka/
+    creates: /home/ubuntu/kafka
 
 
 - name: Create zookeeper service file
