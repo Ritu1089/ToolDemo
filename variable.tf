@@ -217,10 +217,10 @@ variable "TG_name" {
 }
 
 
-#variable "HTTP_port_tg" {
- # type = string
- # default = "80"
-#}
+variable "HTTP_port_tg" {
+  type = string
+  default = "80"
+}
 
 variable "protocol_type" {
   type = string
